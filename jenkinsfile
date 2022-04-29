@@ -22,9 +22,14 @@ pipeline {
                 echo 'Testing'
             }
         }
-        stage('Release') {
-            steps {
-                echo 'Releasing'
+         stage("Kubernetes Deployment"){
+            steps{
+                script{
+                    withCredentials([kubeconfigFile(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')]) {
+                        sh '''
+                           kubectl apply -f test.yaml
+                            
+                        '''
             }
         }
     }
