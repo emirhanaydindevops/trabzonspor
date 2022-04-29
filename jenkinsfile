@@ -1,7 +1,7 @@
 node{
      
     stage('SCM Checkout'){
-        git branch: 'main', credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/trabzonspor'
+        git branch: 'main', credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/trabzonspor.git'
     }
     
     
@@ -16,9 +16,9 @@ node{
         )
      }
 	 
-	  /**
+	  /
       stage("Deploy To Kuberates Cluster"){
-        sh 'kubectl apply -f springBootMongo.yml'
+        sh 'kubectl apply -f deployment.yml'
       } **/
      
 }
