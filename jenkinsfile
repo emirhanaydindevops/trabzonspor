@@ -1,40 +1,24 @@
-pipeline {
-    agent any
-    tools{
-        jdk 'java11'
+node{
+     
+    stage('SCM Checkout'){
+        git branch: 'main', credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/trabzonspor'
     }
+    
+    
 
-    stages {
-        stage('Checkout Source') {
-          steps {
-            echo 'Pulling... ' + scm.branches[0].name
-            git branch: scm.branches[0].name, credentialsId: 'jenkins-git', url: 'https://github.com/emirhanaydindevops/trabzonspor.git'
-          }
-        }
-        stage("Commit Stage"){
-            
-                    
-                }
-            }
-        }
-        stage("Docker Build and push"){
-            steps{
-                script{
-                    myapp = docker.build("nginx")
-                    docker.withRegistry('', 'dockerhub') {
-                        myapp.push("latest")
-                    }
-                }
-            }
-        }
-        stage("Deploy To Kuberates Cluster"){
+     }
+     
+     stage("Deploy To Kuberates Cluster"){
        kubernetesDeploy(
          configs: 'deployment.yml', 
          kubeconfigId: 'KUBERNATES_CLUSTER_CONFIG',
          enableConfigSubstitution: true
-                    }
-                }
-            }
-        }
-    }
+        )
+     }
+	 
+	  /**
+      stage("Deploy To Kuberates Cluster"){
+        sh 'kubectl apply -f springBootMongo.yml'
+      } **/
+     
 }
