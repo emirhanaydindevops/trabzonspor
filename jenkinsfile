@@ -6,19 +6,4 @@ node{
     
     
 
-     }
      
-     stage("Deploy To Kuberates Cluster"){
-       kubernetesDeploy(
-         configs: 'deployment.yml', 
-         kubeconfigId: 'KUBERNATES_CLUSTER_CONFIG',
-         enableConfigSubstitution: true
-        )
-     }
-	 
-	  /
-      stage("Deploy To Kuberates Cluster"){
-        sh 'kubectl apply -f deployment.yml'
-      } /
-     
-}
