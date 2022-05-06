@@ -1,12 +1,5 @@
-pipeline {
-    agent any
-    tools{
-        jdk 'java11'
+node {
+    
+     stage('Checkout Source') {
+       git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/trabzonspor.git' }
     }
-
-    stages {
-        stage('Checkout Source') {
-          steps {
-            git branch: 'main', credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/trabzonspor.git'
-          }
-        
