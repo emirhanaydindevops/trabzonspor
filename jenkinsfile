@@ -1,36 +1,12 @@
 pipeline {
     agent any
+    tools{
+        jdk 'java11'
+    }
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage('Buid') {
-            steps {
-                echo 'Building'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing'
-            }
-        }
-         stage("Kubernetes Deployment"){
-            steps{
-                script{
-                    withCredentials([kubeconfigFile(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')]) {
-                        sh '''
-                           kubectl apply -f test.yaml
-                            
-                        '''
-            }
-        }
-    }
-}
+        stage('Checkout Source') {
+          steps {
+            git branch: 'main', credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/emirhanaydindevops/trabzonspor.git'
+          }
+        
